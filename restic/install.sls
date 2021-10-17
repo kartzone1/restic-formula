@@ -8,7 +8,6 @@ restic-package-install-pkg-installed:
 
 restic-repo-init:
   cmd.run:
-    - name: {{ restic.path }} -p {{ restic.password }} -r sftp:{{ restic.user }}:{{ restic.ssh_host }}:{{ restic.ssh_host_path }}/{{ grains['id'] }} init > ./restic-state
+    - name: RESTIC_PASSWORD={{ restic.password }} {{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ restic.ssh_host_path }}/{{ grains['id'] }} init
     - runas: {{ restic.rootuser }}
-    - cwd: {{ restic.path }}
-    - unless: grep -q "created restic repository" ./restic-state
+    - unless: RESTIC_PASSWORD={{ restic.password }} {{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ restic.ssh_host_path }}/{{ grains['id'] }} snapshots

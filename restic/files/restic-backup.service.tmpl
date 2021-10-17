@@ -12,18 +12,17 @@ Description=Restic backup
 Type=oneshot
 User={{ restic.rootuser }}
 CPUQuota={{ restic.cpuquota }}%
-Environment="RESTIC_REPOSITORY=sftp:{{ restic.user }}:{{ restic.ssh_host }}:{{ grains['id'] }}"
 Environment="RESTIC_PASSWORD={{ restic.password  }}"
-ExecStartPre={{ restic.path }} check
+ExecStartPre={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} check
 
 {% for folder in restic.folders_to_backup %}
-ExecStart={{ restic.path }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
+ExecStart={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
 {% endfor -%}
 
 {% if restic.forget %}
-ExecStartPost={{ restic.path }} forget --keep-within {{ restic.forget_keep_within }}
+ExecStartPost={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} forget --keep-within {{ restic.forget_keep_within }}
 {% endif -%}
 
 {% if restic.prune %}
-ExecStartPost={{ restic.path }} prune
+ExecStartPost={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} prune
 {% endif -%}
