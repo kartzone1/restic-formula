@@ -1,0 +1,29 @@
+########################################################################
+# File managed by Salt
+# Your changes will be overwritten.
+########################################################################
+
+{%- from "restic/map.jinja" import restic with context %}
+
+[Unit]
+Description=Restic backup
+
+[Service]
+Type=oneshot
+User={{ restic.rootuser }}
+CPUQuota={{ restic.cpuquota }}%
+Environment="RESTIC_REPOSITORY=sftp:{{ restic.user }}:{{ restic.ssh_host }}:{{ grains['id'] }}"
+Environment="RESTIC_PASSWORD={{ restic.password  }}"
+ExecStartPre={{ restic.path }} check
+
+{% for folder in restic.folders_to_backup %}
+ExecStart={{ restic.path }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
+{% endfor -%}
+
+{% if restic.forget %}
+ExecStartPost={{ restic.path }} forget --keep-within {{ restic.forget_keep_within }}
+{% endif -%}
+
+{% if restic.prune %}
+ExecStartPost={{ restic.path }} prune
+{% endif -%}

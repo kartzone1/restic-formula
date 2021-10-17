@@ -1,0 +1,16 @@
+########################################################################
+# File managed by Salt
+# Your changes will be overwritten.
+########################################################################
+
+{%- from "restic/map.jinja" import restic with context %}
+
+[Unit]
+Description=Restic backup
+
+[Timer]
+OnCalendar={{ restic.systemd_timer_on_calender }}
+RandomizedDelaySec={{ restic.systemd_timer_randomized_delay_sec }}
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Set default values.
+---
+restic:
+  pkg:
+    name: restic
+  user: restic
+  rootuser: root
+  rootgroup: root
+  configmode: 644
+  config_service: '/etc/systemd/system/restic-backup.service'
+  config_service_tmpl: 'salt://restic/files/restic-backup.service.tmpl'
+  config_timer: '/etc/systemd/system/restic-backup.timer'
+  config_timer_tmpl: 'salt://restic/files/restic-backup.timer.tmpl'
+  service:
+    name: restic-backup.timer
+  cpuquota: 25%
+  ssh_host: restic.domain.name
+  ssh_host_path: /srv
+  password: password
+  path: /usr/bin/restic
+  forget: true
+  forget_keep_within: 30d
+  prune: true
+  systemd_timer_on_calender: '*-*-* 03:00:00'
+  systemd_timer_randomized_delay_sec: 0
+  folders_to_backup:
+    - { path: '/etc' }
+    - { path: '/var/log' }
+    - { path: '/root', exclude: '--exclude .cache' }

@@ -1,9 +1,0 @@
-name: restic
-os: Debian
-os_family: Debian
-version: 0.0.1
-release: 1
-minimum_version: 2019.2
-summary: restic formula
-description: Formula to install and configure Restic backup tool
-top_level_dir: restic
