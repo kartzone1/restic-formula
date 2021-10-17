@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Set default values.
+---
+values:
+  pkg:
+    name: restic
+  rootgroup: root
+  config-service: '/etc/systemd/system/restic-backup.service'
+  config-timer: '/etc/systemd/system/restic-backup.timer'
+  service:
+    name: restic-backup.timer
+  user: restic
+  cpuquota: 25%
+  ssh_host: restic.domain.name
+  repository_name: hostname
+  password: password
+  path: /usr/bin/restic
+  forget: false
+  forget_keep_within: 30d
+  prune: false
+  systemd_timer_on_calendar: '*-*-* 03:00:00'
+  systemd_timer_randomized_delay_sec: 0
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
+...

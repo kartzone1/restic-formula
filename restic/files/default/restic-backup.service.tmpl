@@ -1,0 +1,27 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+[Unit]
+Description=Restic backup
+
+[Service]
+Type=oneshot
+User={{ restic.user }}
+CPUQuota={{ restic.cpuquota }}%
+Environment="RESTIC_REPOSITORY=sftp:{{ restic.ssh_host }}:{{ restic.repository_name }}"
+Environment="RESTIC_PASSWORD={{ restic.password}}"
+ExecStartPre={{ restic.path }} check
+
+{% for folder in restic.folders_combined %}
+ExecStart={{ restic.path }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
+{% endfor -%}
+
+{% if restic.forget %}
+ExecStartPost={{ restic.path }} forget --keep-within {{ restic.forget_keep_within }}
+{% endif -%}
+
+{% if restic.prune %}
+ExecStartPost={{ restic.path }} prune
+{% endif -%}

@@ -1,0 +1,14 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+[Unit]
+Description=Restic backup
+
+[Timer]
+OnCalendar={{ restic.systemd_timer_on_calender }}
+RandomizedDelaySec={{ restic.systemd_timer_randomized_delay_sec }}
+
+[Install]
+WantedBy=timers.target
