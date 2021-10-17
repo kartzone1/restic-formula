@@ -16,7 +16,7 @@ restic:
   config_timer_tmpl: 'salt://restic/files/restic-backup.timer.tmpl'
   service:
     name: restic-backup.timer
-  cpuquota: 25%
+  cpuquota: 25
   ssh_host: restic.domain.name
   ssh_host_path: /srv
   password: password
