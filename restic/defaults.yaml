@@ -9,7 +9,7 @@ restic:
   user: restic
   rootuser: root
   rootgroup: root
-  configmode: 644
+  configmode: 640
   config_service: '/etc/systemd/system/restic-backup.service'
   config_service_tmpl: 'salt://restic/files/restic-backup.service.tmpl'
   config_timer: '/etc/systemd/system/restic-backup.timer'
@@ -19,7 +19,7 @@ restic:
   cpuquota: 25
   ssh_host: restic.domain.name
   ssh_host_path: /srv
-  password: password
+  password: P@$sW0rd2Change
   path: /usr/bin/restic
   forget: true
   forget_keep_within: 30d
