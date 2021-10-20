@@ -19,8 +19,8 @@ which contains the currently released version. This formula is versioned accordi
 
 See `Formula Versioning Section <https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html#versioning>`_ for more details.
 
-``OS families``
-
+OS families
+-----------
 Only tested on Debian 11
 
 From
