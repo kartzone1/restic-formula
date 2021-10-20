@@ -1,5 +1,3 @@
-.. _readme:
-
 restic-formula
 ===========
 
@@ -21,8 +19,7 @@ which contains the currently released version. This formula is versioned accordi
 
 See `Formula Versioning Section <https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html#versioning>`_ for more details.
 
-OS families
-^^^^^^^^^^^
+#OS families
 Only tested on Debian 11
 
 From
@@ -32,21 +29,14 @@ based on https://github.com/angristan/ansible-restic
 Available states
 ---------------------
 
-.. contents::
-    :local:
-
 ``restic``
-^^^^^^^
 Meta-state to run all states in sequence: 'install', 'systemd' and 'service'.
 
 ``restic.install``
-^^^^^^^^^^^^^^^^
 State to install Restic package
 
 ``restic.systemd``
-^^^^^^^^^^^^^
 State to configure a systemd service and its timer
 
 ``restic.service``
-^^^^^^^^^^
 State to enable and start systemd service

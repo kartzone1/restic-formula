@@ -1,0 +1,11 @@
+restic:
+  ssh_host: myrestic.host.local
+  host_path: /srv/backup
+  backendtype: ssh
+  folders_to_backup:
+    - { path: '/etc' }
+    - { path: '/var/log' }
+    - { path: '/root', exclude: '--exclude .cache' }
+    - { path: '/home', exclude: '--exclude .cache' }
+    - { path: '/srv', exclude: '--iexclude "*.iso" --exclude "*somedir*"' }
+  password: MyVerySecretPasswordForRestic
