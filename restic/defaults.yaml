@@ -17,8 +17,10 @@ restic:
   service:
     name: restic-backup.timer
   cpuquota: 25
+  #backendtype (ssh or local)
+  backendtype: local
   ssh_host: restic.domain.name
-  ssh_host_path: /srv
+  host_path: /srv
   password: P@$sW0rd2Change
   path: /usr/bin/restic
   forget: true
