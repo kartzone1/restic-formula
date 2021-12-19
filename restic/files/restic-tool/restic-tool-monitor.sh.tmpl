@@ -1,0 +1,8 @@
+########################################################################
+# File managed by Salt
+# Your changes will be overwritten.
+########################################################################
+
+{%- from "restic/map.jinja" import restic with context %}
+
+{{ restic.tool.bin.path }}/{{ restic.tool.bin.name }} {{ restic.tool.repo }} monitor {{ grains['id'] }} {{ restic.tool.monitor.warning_hours }} {{ restic.tool.monitor.critical_hours }}

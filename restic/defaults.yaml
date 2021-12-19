@@ -32,3 +32,24 @@ restic:
     - { path: '/etc' }
     - { path: '/var/log' }
     - { path: '/root', exclude: '--exclude .cache' }
+
+  tool:
+    path: /etc/backup
+    configmode: 640
+    config_file_tmpl: 'salt://restic/files/restic-tool/restic-tool-config.tmpl'
+    config_file: 'local.config'
+    repo: example
+    repo_file: example.repo
+    repo_file_tmpl: 'salt://restic/files/restic-tool/restic-tool-repo.tmpl'
+    bin:
+      path: /usr/local/bin
+      name: restic-tool.sh
+      source: 'salt://restic/files/restic-tool/restic-tool.sh'
+      configmode: 750
+    monitor:
+      path: /usr/lib/check_mk_agent/local
+      script_name: restic-tool-monitor.sh
+      script_file_tmpl: 'salt://restic/files/restic-tool/restic-tool-monitor.sh.tmpl'
+      configmode: 750
+      warning_hours: 48
+      critical_hours: 72

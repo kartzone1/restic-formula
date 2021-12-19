@@ -12,7 +12,7 @@ Description=Restic backup
 Type=oneshot
 User={{ restic.rootuser }}
 CPUQuota={{ restic.cpuquota }}%
-Environment="RESTIC_PASSWORD={{ restic.password  }}"
+Environment="RESTIC_PASSWORD={{ restic.password }}"
 ExecStartPre={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} check
 
 {% for folder in restic.folders_to_backup %}
