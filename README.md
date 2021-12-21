@@ -13,6 +13,8 @@ From
 -------------
 based on https://github.com/angristan/ansible-restic
 
+and restic-tool : https://github.com/binarybucks/restic-tools
+
 Available states
 ---------------------
 
@@ -34,3 +36,8 @@ State to configure a systemd service and its timer
 ``restic.service``
 
 State to enable and start systemd service
+
+
+``restic.monitor``
+
+State to install a Check_MK/Nagios check for verify last backup date

@@ -9,3 +9,9 @@ restic:
     - { path: '/home', exclude: '--exclude .cache' }
     - { path: '/srv', exclude: '--iexclude "*.iso" --exclude "*somedir*"' }
   password: MyVerySecretPasswordForRestic
+  tool:
+    repo: my_repo_name
+    repo_file: my_repo_name.repo
+    monitor:
+      warning_hours: 24
+      critical_hours: 48
