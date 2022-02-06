@@ -5,6 +5,12 @@
 
 {%- from "restic/map.jinja" import restic with context %}
 
+{%- if restic.backendtype == "ssh" %}
+{%- set backup_restic_path = 'sftp:' + restic.user + '@' + restic.ssh_host + ':' + restic.host_path %}
+{%- else %}
+{%- set backup_restic_path = restic.host_path %}
+{%- endif %}
+
 [Unit]
 Description=Restic backup
 
@@ -13,16 +19,17 @@ Type=oneshot
 User={{ restic.rootuser }}
 CPUQuota={{ restic.cpuquota }}%
 Environment="RESTIC_PASSWORD={{ restic.password }}"
-ExecStartPre={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} check
+Environment="RESTIC_REPOSITORY={{ backup_restic_path }}/{{ grains['id'] }}"
+ExecStartPre={{ restic.path }} check
 
 {% for folder in restic.folders_to_backup %}
-ExecStart={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
+ExecStart={{ restic.path }} backup --verbose {{ folder.path }} {{ folder.exclude if folder.exclude is defined else '' }}
 {% endfor -%}
 
 {% if restic.forget %}
-ExecStartPost={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} forget --keep-within {{ restic.forget_keep_within }}
+ExecStartPost={{ restic.path }} forget --keep-within {{ restic.forget_keep_within }}
 {% endif -%}
 
 {% if restic.prune %}
-ExecStartPost={{ restic.path }} -r sftp:{{ restic.user }}@{{ restic.ssh_host }}:{{ grains['id'] }} prune
+ExecStartPost={{ restic.path }} prune
 {% endif -%}
